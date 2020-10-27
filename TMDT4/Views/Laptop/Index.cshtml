@@ -1,0 +1,170 @@
+﻿
+@model IEnumerable<TMDT4.Models.laptop>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@{Html.RenderAction("getCompany", "Laptop"); }
+<br />
+@{Html.RenderAction("getCPU", "Laptop"); }
+<br />
+@{Html.RenderAction("SetScreenResolution", "Laptop"); }
+<br />
+@{Html.RenderAction("SetTypeName", "Laptop"); }
+<br />
+@{Html.RenderAction("SetMemory", "Laptop"); }
+<br />
+@{Html.RenderAction("SetGPU", "Laptop"); }
+<br />
+@{Html.RenderAction("SetOS", "Laptop"); }
+<br />
+@{Html.RenderAction("SetRam", "Laptop"); }
+<br />
+@{Html.RenderAction("SetInch", "Laptop"); }
+<br />
+@{Html.RenderAction("SetSpeed", "Laptop"); }
+<input type="button" name="name" onclick="find();" value="Assign" />
+<ul id="laptop"></ul>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+
+
+    var uri = "../../api/LaptopAPI"
+    $(document).ready(function () {
+        $.getJSON(uri).done(function (data) {
+            $.each(data, function (key, item) {
+                $('<li>', { text: formatItem(item) }).appendTo($('#laptop'));
+            });
+        });
+
+    });
+    function formatItem(item) {
+        return item.Product + ':' + item.ScreenResolution;
+    }
+    function find() {
+        $('#laptop').text('');
+        var idString = "";
+        var idCompany = $('#2').find('input[type=checkbox]');
+        var idCpu = $('#6').find('input[type=checkbox]');
+        var screenSolution = $('#3').find('input[type=checkbox]');
+        var typename = $('#4').find('input[type=checkbox]');
+        var memory = $('#8').find('input[type=checkbox]');
+        var gpu = $('#10').find('input[type=checkbox]');
+        var os = $('#11').find('input[type=checkbox]');
+        var ram = $('#9').find('input[type=checkbox]');
+        var inch = $('#5').find('input[type=checkbox]');
+        var speed = $('#7').find('input[type=checkbox]');
+
+      
+        for (var i = 0; i < idCompany.length; i++) {
+            if (idCompany[i].checked) {
+                if (idString == "") {
+                    idString = "2-" + idCompany[i].name;
+                }
+                else {
+                    idString = idString + "_2-" + idCompany[i].name;
+                }
+            }
+        }
+
+        for (var i = 0; i < idCpu.length; i++) {
+            if (idCpu[i].checked) {
+                if (idString == "") {
+                    idString = "6-" + idCpu[i].name;
+                }
+                else {
+                    idString = idString + "_6-" + idCpu[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < screenSolution.length; i++) {
+            if (screenSolution[i].checked) {
+                if (idString == "") {
+                    idString = "3-" + screenSolution[i].name;
+                }
+                else {
+                    idString = idString + "_3-" + idCpu[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < typename.length; i++) {
+            if (typename[i].checked) {
+                if (idString == "") {
+                    idString = "4-" + typename[i].name;
+                }
+                else {
+                    idString = idString + "_4-" + typename[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < memory.length; i++) {
+            if (memory[i].checked) {
+                if (idString == "") {
+                    idString = "8-" + typename[i].name;
+                }
+                else {
+                    idString = idString + "_8-" + memory[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < gpu.length; i++) {
+            if (gpu[i].checked) {
+                if (idString == "") {
+                    idString = "10-" + gpu[i].name;
+                }
+                else {
+                    idString = idString + "_10-" + gpu[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < os.length; i++) {
+            if (os[i].checked) {
+                if (idString == "") {
+                    idString = "11-" + os[i].name;
+                }
+                else {
+                    idString = idString + "_11-" + os[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < ram.length; i++) {
+            if (ram[i].checked) {
+                if (idString == "") {
+                    idString = "9-" + ram[i].name;
+                }
+                else {
+                    idString = idString + "_9-" + ram[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < inch.length; i++) {
+            if (inch[i].checked) {
+                if (idString == "") {
+                    idString = "5-" + inch[i].name;
+                }
+                else {
+                    idString = idString + "_5-" + inch[i].name;
+                }
+            }
+        }
+        for (var i = 0; i < speed.length; i++) {
+            if (speed[i].checked) {
+                if (idString == "") {
+                    idString = "7-" + speed[i].name;
+                }
+                else {
+                    idString = idString + "_7-" + speed[i].name;
+                }
+            }
+        }
+        $.getJSON(uri + "/" + idString).done(function (data) {
+             $.each(data, function (key, item) {
+                $('<li>', { text: formatItem(item) }).appendTo($('#laptop'));
+            });
+        }).fail(function (jqXHR,textStatus,err) {
+            $('#laptop').text('Error:' + err);
+        });
+
+    }
+</script>
